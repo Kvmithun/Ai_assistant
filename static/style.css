@@ -7,6 +7,8 @@ body {
     align-items: center;
     min-height: 100vh;
     margin: 0;
+    /* Added to prevent horizontal scrollbar on small screens */
+    overflow-x: hidden; 
     padding: 20px;
 }
 
@@ -158,11 +160,75 @@ h1 {
 }
 /* --- END REVISED BUTTON STYLING --- */
 
-/* Responsive Adjustments */
+/* ==================================================
+RESPONSIVE ADJUSTMENTS (Max-width: 768px - Tablets/Large Phones)
+================================================== 
+*/
 @media (max-width: 768px) {
+    /* This removes the container effect, allowing the chat to fill the entire screen, 
+    which is standard for mobile apps.
+    */
     .chat-container {
         height: 100vh;
         border-radius: 0;
         box-shadow: none;
+        max-width: 100%; /* Ensure it always takes full width */
+        min-height: initial; /* Allow height to adjust */
+    }
+
+    /* Reduce global body padding on smaller screens */
+    body {
+        padding: 0;
+    }
+
+    /* Reduce padding in chat box */
+    #chat-box {
+        padding: 15px;
+    }
+
+    /* Adjust message font size for smaller screens */
+    .message {
+        font-size: 0.9rem;
+    }
+}
+
+
+/* ==================================================
+RESPONSIVE ADJUSTMENTS (Max-width: 480px - Phones)
+================================================== 
+*/
+@media (max-width: 480px) {
+    /* Refine header styling */
+    h1 {
+        padding: 15px;
+        font-size: 1.2rem;
+    }
+    
+    /* Adjust Input Area for very small screens */
+    #chat-form {
+        padding: 10px 15px; /* Less horizontal padding */
+        gap: 5px; /* Ensure a small gap between input and button */
+    }
+
+    #user-input {
+        padding: 10px 15px;
+        font-size: 0.9rem;
+        margin-right: 5px; /* Reduce margin */
+        height: 40px; /* Slightly shorter input field */
+    }
+
+    /* Adjust button for mobile */
+    #chat-form button {
+        padding: 0 15px;
+        min-width: 60px; /* Allow the button to shrink */
+        height: 40px; /* Match input height */
+        font-size: 0.9rem;
+    }
+    
+    /* Reposition status tag to be slightly less obtrusive on small bubbles */
+    .message-status {
+        top: -8px;
+        right: -8px;
+        font-size: 0.65rem;
     }
 }

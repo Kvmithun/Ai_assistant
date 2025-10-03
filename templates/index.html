@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Health Connect AI Assistant</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+    <div class="chat-container">
+        <h1>Smart Health Connect AI 🩺</h1>
+        <div id="chat-box">
+            <div class="message bot-message">
+                <p>Hello, I'm your Smart Health Assistant. Please describe your symptoms or health concern, and I will provide preliminary guidance.</p>
+            </div>
+        </div>
+
+        <form id="chat-form">
+            <input type="text" id="user-input" placeholder="Type your symptoms here..." required>
+            <button type="submit">Send</button>
+        </form>
+    </div>
+
+    <script>
+        const chatForm = document.getElementById('chat-form');
+        const userInput = document.getElementById('user-input');
+        const chatBox = document.getElementById('chat-box');
+
+        // Function to add a message to the chat box
+        function addMessage(text, sender) {
+            const messageDiv = document.createElement('div');
+            messageDiv.classList.add('message', `${sender}-message`);
+
+            const messageP = document.createElement('p');
+            // Basic markdown for the AI's response text
+            messageP.innerHTML = text.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+
+            messageDiv.appendChild(messageP);
+            chatBox.appendChild(messageDiv);
+
+            // Scroll to the bottom
+            chatBox.scrollTop = chatBox.scrollHeight;
+        }
+
+        // Event listener for form submission
+        chatForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const userText = userInput.value.trim();
+            if (userText === '') return;
+
+            addMessage(userText, 'user');
+            userInput.value = ''; // Clear input
+
+            // Add a temporary 'typing' indicator
+            const typingIndicator = document.createElement('div');
+            typingIndicator.classList.add('message', 'bot-message', 'typing');
+            typingIndicator.innerHTML = '<p>Assistant is thinking...</p>';
+            chatBox.appendChild(typingIndicator);
+            chatBox.scrollTop = chatBox.scrollHeight;
+
+            try {
+                // Send message to the Flask backend
+                const response = await fetch('/chat', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ message: userText }),
+                });
+
+                const data = await response.json();
+
+                // Remove the typing indicator
+                chatBox.removeChild(typingIndicator);
+
+                if (data.response) {
+                    addMessage(data.response, 'bot');
+                } else if (data.error) {
+                    addMessage(`Error: ${data.error}`, 'bot');
+                }
+
+            } catch (error) {
+                console.error('Fetch Error:', error);
+                chatBox.removeChild(typingIndicator);
+                addMessage('A network error occurred. Check the server connection.', 'bot');
+            }
+        });
+    </script>
+</body>
+</html>

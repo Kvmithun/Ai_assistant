@@ -1,0 +1,168 @@
+/* Global Setup */
+body {
+    font-family: 'Inter', Arial, sans-serif;
+    background-color: #f0f4f8; /* Light grey background for the overall app */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+    padding: 20px;
+}
+
+/* Main Container (Based on your provided HTML) */
+.chat-container {
+    width: 100%;
+    max-width: 650px;
+    height: 85vh;
+    min-height: 500px;
+    background-color: #ffffff; /* Pure white chat background */
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    border-radius: 20px; /* Highly rounded corners */
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+/* Header Styling */
+h1 {
+    text-align: center;
+    padding: 20px;
+    margin: 0;
+    font-size: 1.4rem;
+    color: #007bff; /* Primary Blue Brand Color */
+    font-weight: 700;
+    border-bottom: 1px solid #e9ecef;
+}
+
+/* Chat Box Area */
+#chat-box {
+    flex-grow: 1;
+    overflow-y: auto;
+    padding: 25px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+/* Individual Message Container - Added relative positioning for status tag */
+.message {
+    max-width: 80%;
+    padding: 12px 18px;
+    border-radius: 20px;
+    line-height: 1.4;
+    word-wrap: break-word;
+    font-size: 0.95rem;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+    position: relative; /* Enable absolute positioning for status tag */
+}
+
+.message p {
+    margin: 0;
+}
+
+/* User Message (Blue Bubble, Right Alignment) */
+.user-message {
+    align-self: flex-end;
+    background-color: #007bff;
+    color: white;
+    border-bottom-right-radius: 5px; /* Sharp corner near the input */
+}
+
+/* Bot Message (Light Blue/Gray Bubble, Left Alignment) */
+.bot-message {
+    align-self: flex-start;
+    background-color: #e3f2fd;
+    color: #333;
+    border-bottom-left-radius: 5px; /* Sharp corner near the header/side */
+}
+
+/* --- NEW MEDICAL STATUS TAG STYLING --- */
+
+.message-status {
+    position: absolute;
+    top: -10px; /* Position slightly above the bubble */
+    right: -10px; /* Position to the outside right edge */
+    font-size: 0.7rem;
+    font-weight: 700;
+    padding: 3px 8px;
+    border-radius: 10px;
+    color: white;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    z-index: 10;
+}
+
+/* Specific Status Colors (Triage = Emergency/Urgent) */
+.status-triage {
+    background-color: #dc3545; /* Red */
+}
+
+/* Specific Status Colors (Advice = Self-Care/General) */
+.status-advice {
+    background-color: #28a745; /* Green */
+}
+
+/* Specific Status Colors (Referral = Specialist/App Feature Guidance) */
+.status-referral {
+    background-color: #ffc107; /* Yellow/Orange */
+    color: #333; /* Dark text for contrast on yellow */
+}
+
+/* --- END STATUS TAG STYLING --- */
+
+
+/* Input Area Styling */
+#chat-form {
+    display: flex;
+    padding: 15px 25px;
+    border-top: 1px solid #e9ecef;
+    background-color: #f8f9fa;
+}
+
+#user-input {
+    flex-grow: 1;
+    padding: 12px 20px;
+    border: 1px solid #ced4da;
+    border-radius: 25px; /* Fully rounded input field */
+    font-size: 1rem;
+    outline: none;
+    transition: border-color 0.2s;
+    margin-right: 10px;
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+#user-input:focus {
+    border-color: #007bff;
+}
+
+/* --- REVISED SEND BUTTON STYLING (Primary Blue) --- */
+#chat-form button {
+    padding: 0 20px;
+    background-color: #007bff; /* Primary Blue */
+    color: white;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: 600;
+    transition: background-color 0.3s, transform 0.1s;
+    min-width: 80px;
+    height: 48px; /* Match input height */
+}
+
+#chat-form button:hover {
+    background-color: #0056b3; /* Darker blue on hover */
+    transform: translateY(-1px); /* Slight lift effect */
+}
+/* --- END REVISED BUTTON STYLING --- */
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+    .chat-container {
+        height: 100vh;
+        border-radius: 0;
+        box-shadow: none;
+    }
+}
